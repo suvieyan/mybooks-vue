@@ -8,3 +8,4 @@ module.exports = async (ctx, next) => {
         ctx.state.data['time'] = Math.floor(Date.now() / 1000)
     }
 }
+

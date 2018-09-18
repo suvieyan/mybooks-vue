@@ -58,13 +58,17 @@ export default {
       console.log('userinfo', res)
     },
     login () {
+      // 显示loading
       wx.showToast({
         title: '登录中',
         icon: 'loading'
       })
+      // qcloud.setLoginUrl设置登录url
       qcloud.setLoginUrl(config.loginUrl)
+      // 用qcloud.Session.get()获取用户登录是否过期
       const session = qcloud.Session.get()
       if (session) {
+        // 没过期，使用qcloud.loginWithCode 成功后设置setStorageSync和this.userinfo
         qcloud.loginWithCode({
           success: res => {
             console.log('没过期的登录', res)
@@ -75,6 +79,7 @@ export default {
           }
         })
       } else {
+        // 过期了 使用qcloud.login，成功后设置setStorageSync和this.userinfo
         qcloud.login({
           success: res => {
             console.log('登录成功', res)

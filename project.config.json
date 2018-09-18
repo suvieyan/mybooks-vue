@@ -9,6 +9,7 @@
 	},
 	"miniprogramRoot": "dist/",
 	"compileType": "miniprogram",
+  "qcloudRoot":"./server/",
 	"appid": "wx141565d8c5463713",
 	"projectname": "yan-books",
 	"condition": {

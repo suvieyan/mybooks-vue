@@ -54,6 +54,8 @@
       wx.stopPullDownRefresh()
     },
     onShow () {
+      // 分享的生命周期
+      wx.showShareMenu()
       if (!this.userinfo.openId) {
         let userinfo = wx.getStorageSync('userinfo')
         if (userinfo) {

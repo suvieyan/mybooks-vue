@@ -8,7 +8,7 @@ const {mysql} = require('../qcloud')
 // 2. 入库
 module.exports = async (ctx) => {
   const {isbn, openid} = ctx.request.body
-  console.log('添加图书',isbn.openid)
+  console.log('添加图书',isbn,openid)
   if (isbn && openid) {
     const findRes = await mysql('books').select().where('isbn', isbn)
     if (findRes.length) {
