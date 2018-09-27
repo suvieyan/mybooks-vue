@@ -19,3 +19,5 @@ npm run build --report
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+部署上线的过程当中，腾讯云的环境一直报错，目前还没有进行处理
