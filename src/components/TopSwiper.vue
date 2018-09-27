@@ -10,17 +10,17 @@
     >
       <div :key='imgindex' v-for='(top,imgindex) in imgUrls'>
         <swiper-item>
-          <img  
+          <img
             @click='bookDetail(img)'
-            class='slide-image' 
-            mode='aspectFit' 
+            class='slide-image'
+            mode='aspectFit'
             v-for='img in top'
             :key='img.id'
-            :src="img.image" 
+            :src="img.image"
             >
         </swiper-item>
       </div>
-    
+
     </swiper>
   </div>
 </template>
@@ -32,8 +32,10 @@ export default {
     imgUrls () {
       // 如果通用 请用chunk函数  比如lodash的chunk方法,打散这个list
       let res = this.tops
-      console.log([res.slice(0, 3), res.slice(3, 6), res.slice(6)])
-      return [res.slice(0, 3), res.slice(3, 6), res.slice(6)]
+      if (res) {
+        console.log([res.slice(0, 3), res.slice(3, 6), res.slice(6)])
+        return [res.slice(0, 3), res.slice(3, 6), res.slice(6)]
+      }
     }
   },
   methods: {

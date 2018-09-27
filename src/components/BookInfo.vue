@@ -1,11 +1,11 @@
 <template>
   <div class='bookinfo'>
     <div class="thumb">
-      <img class='back' 
+      <img class='back'
         :src="info.image"
         mode='aspectFill'>
-      <img class="img"  
-            :src="info.image" 
+      <img class="img"
+            :src="info.image"
             mode='aspectFit'
           >
       <div class="info">
@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="tags">
-      <div class="badge" :key='tag' v-for='tag in info.tags'>{{tag}}</div>
+      <div class="badge" :key='tag' v-for='tag in tags'>{{tag}}</div>
     </div>
     <div class="summary">
       <p :key='i' v-for='(sum,i) in info.summary'>{{sum}}</p>
@@ -58,7 +58,7 @@ export default {
 <style lang='scss'>
 .bookinfo{
   font-size: 14px;
-  
+
   .badge{
     display: inline-block;
     margin:5px;

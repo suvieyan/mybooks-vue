@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <CommentList v-if='userinfo.openId'
+    <CommentList v-if='userinfo.openid'
                  type='user'
                  :comments="comments"></CommentList>
-    <div v-if='userinfo.openId'>
+    <div v-if='userinfo.openid'>
       <div class="page-title">我的图书</div>
       <Card
         v-for='book in books'
@@ -14,10 +14,10 @@
   </div>
 </template>
 <script>
-  import {get} from '@/util'
   import CommentList from '@/components/CommentList'
   import Card from '@/components/Card'
-  export default {
+  import config from '../../config'
+export default {
     data () {
       return {
         comments: [],
@@ -36,17 +36,35 @@
         this.getBooks()
         wx.hideNavigationBarLoading()
       },
-      async getBooks () {
-        const books = await get('/weapp/booklist', {
-          openid: this.userinfo.openId
+      getBooks () {
+        let data = {
+          openid: this.userinfo.openid
+        }
+        let _that = this
+        wx.request({
+          // 发送post请求为了方便传递到后台数据
+          url: config.host + '/mybooks',
+          method: 'get',
+          data: data,
+          success: function (res) {
+            _that.books = res.data.data
+          }
         })
-        this.books = books.list
       },
-      async getComments () {
-        const comments = await get('/weapp/commentlist', {
-          openid: this.userinfo.openId
+      getComments () {
+        let data = {
+          openid: this.userinfo.openid
+        }
+        let _that = this
+        wx.request({
+          // 发送post请求为了方便传递到后台数据
+          url: config.host + '/mycomments',
+          method: 'get',
+          data: data,
+          success: function (res) {
+            _that.comments = res.data.data
+          }
         })
-        this.comments = comments.list
       }
     },
     onPullDownRefresh () {
@@ -56,7 +74,7 @@
     onShow () {
       // 分享的生命周期
       wx.showShareMenu()
-      if (!this.userinfo.openId) {
+      if (!this.userinfo.openid) {
         let userinfo = wx.getStorageSync('userinfo')
         if (userinfo) {
           this.userinfo = userinfo

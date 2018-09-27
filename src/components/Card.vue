@@ -4,10 +4,10 @@
   <div class="book-card">
     <div class="thumb" @click.stop="preview">
         <!-- 小程序的组件 -->
-      <img :src="book.image" 
+      <img :src="book.image"
             class="img"
             mode="aspectFit"
-            />    
+            />
     </div>
     <div class="detail">
       <div class="row text-primary">
@@ -28,7 +28,8 @@
       </div>
       <div class="row">
         <div class="right">
-           {{book.user_info.nickName}}
+          <!--添加人-->
+           {{book.nickName}}
         </div>
         <div class="left">
          {{book.publisher}}
@@ -39,7 +40,7 @@
     </div>
   </div>
   </a>
-  
+
 </template>
 <script>
 import Rate from '@/components/Rate'
@@ -47,7 +48,7 @@ export default {
   components: {
     Rate
   },
-  props: ['book',],
+  props: ['book'],
   computed: {
     detailUrl () {
       return '/pages/detail/main?id=' + this.book.id
@@ -89,12 +90,12 @@ export default {
     }
     .right{
       float: right;
-      
+
     }
     .left{
       margin-right:80px;
     }
   }
-  
+
 }
 </style>

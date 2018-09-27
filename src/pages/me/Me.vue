@@ -7,16 +7,15 @@
       <p>{{userinfo.nickName}}</p>
     </div>
     <YearProgress></YearProgress>
-    <button v-if='userinfo.openId' @click='scanBook' class='btn'>添加图书</button>
+    <button v-if='userinfo.openid' @click='scanBook' class='btn'>添加图书</button>
     <button v-else open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">点击登录</button>
 
   </div>
 
 </template>
 <script>
-import qcloud from 'wafer2-client-sdk'
 import YearProgress from '@/components/YearProgress'
-import { showSuccess, post, showModal } from '@/util'
+import { showSuccess, showModal } from '@/util'
 import config from '@/config'
 export default {
   components: {
@@ -31,22 +30,33 @@ export default {
     }
   },
   methods: {
-    async addBook (isbn) {
-      const res = await post('/weapp/addbook', {
-        isbn: isbn,
-        openid: this.userinfo.openId
+    addBook (isbn) {
+      wx.request({
+        // 发送post请求为了方便传递到后台数据
+        url: config.host + '/addbook',
+        method: 'post',
+        data: {
+          isbn: isbn,
+          openid: this.userinfo.openid
+        },
+        success: function (res) {
+          console.log('res', res)
+          if (res.data.code === -1) {
+            showModal('添加失败', `${res.data.msg}`)
+          } else {
+            console.log('添加图书成功', res.data)
+            showModal('添加成功', `${res.data.data.title}添加成功`)
+          }
+        }
       })
-      console.log('res', res)
-      showModal('添加成功', `${res.title}添加成功`)
     },
-
     scanBook () {
       // 允许从相机和相册扫码
       wx.scanCode({
         success: res => {
           if (res.result) {
+            console.log('isbn', res.result) // isbn
             this.addBook(res.result)
-            console.log(res.result)
           }
         }
       })
@@ -57,39 +67,34 @@ export default {
       this.userinfo = res
       console.log('userinfo', res)
     },
-    login () {
-      // 显示loading
-      wx.showToast({
-        title: '登录中',
-        icon: 'loading'
-      })
-      // qcloud.setLoginUrl设置登录url
-      qcloud.setLoginUrl(config.loginUrl)
-      // 用qcloud.Session.get()获取用户登录是否过期
-      const session = qcloud.Session.get()
-      if (session) {
-        // 没过期，使用qcloud.loginWithCode 成功后设置setStorageSync和this.userinfo
-        qcloud.loginWithCode({
-          success: res => {
-            console.log('没过期的登录', res)
-            this.loginSuccess(res)
-          },
-          fail: err => {
-            console.error(err)
-          }
-        })
-      } else {
-        // 过期了 使用qcloud.login，成功后设置setStorageSync和this.userinfo
-        qcloud.login({
-          success: res => {
-            console.log('登录成功', res)
-            this.loginSuccess(res)
-          },
-          fail: err => {
-            console.error(err)
-          }
-        })
+    login (e) {
+      // e:getUserInfo触发的事件
+      if (!e.target.userInfo) {
+        // 没有获取到userinfo
+        return
       }
+      // 获取到userinfo之后，利用request方法发送ajax请求
+      let data = e.target.userInfo
+      let _that = this
+      // 微信登录的流程；先获取用户的code，在通过code获取用户的唯一标识（openid） 及本次登录的 会话密钥（session_key）等
+      wx.login({
+        success: function (res) {
+          if (!res.code) {
+            return
+          }
+          data['code'] = res.code
+          wx.request({
+            // 发送post请求为了方便传递到后台数据
+            url: config.loginUrl,
+            method: 'post',
+            data: JSON.stringify(data),
+            success: function (res) {
+              console.log('登录成功', res.data.data)
+              _that.loginSuccess(res.data.data)
+            }
+          })
+        }
+      })
     }
   },
   onShow () {

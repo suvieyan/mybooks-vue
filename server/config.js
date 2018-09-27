@@ -1,17 +1,17 @@
 const CONF = {
   // 开发环境的一些配置开始
 
-  // serverHost: 'localhost',
-  //   tunnelServerUrl: '',
-  //   tunnelSignatureKey: '12345',//自己定义
-  //
-  //   // 腾讯云相关配置可以查看云 API 秘钥控制台：https://console.cloud.tencent.com/capi
-  //   qcloudAppId: '1256297273',
-  //   qcloudSecretId: 'AKIDHPOAnDVQEqFRQDKAKH3cyCE8pLejh7RW',
-  //   qcloudSecretKey: 'xe5HEvNaeT9ctxsa6QXRF2kHckgSCl8I',
-  //
-  //   wxMessageToken: 'weixinmsgtoken',
-  //   networkTimeout: 30000,
+    serverHost: 'localhost',
+    tunnelServerUrl: '',
+    tunnelSignatureKey: '12345',//自己定义
+
+    // 腾讯云相关配置可以查看云 API 秘钥控制台：https://console.cloud.tencent.com/capi
+    qcloudAppId: '1256297273',
+    qcloudSecretId: 'AKIDHPOAnDVQEqFRQDKAKH3cyCE8pLejh7RW',
+    qcloudSecretKey: 'xe5HEvNaeT9ctxsa6QXRF2kHckgSCl8I',
+
+    wxMessageToken: 'weixinmsgtoken',
+    networkTimeout: 30000,
   // 开发环境的一些配置结束
 
     port: '5757',
@@ -36,8 +36,8 @@ const CONF = {
         port: 3306,
         user: 'root',
         db: 'cAuth',
-        pass: 'wx141565d8c5463713',// 上线的数据库的密码，自己的APPID
-        // pass: '123',// 本地的MySQL的数据库的密码
+        // pass: 'wx141565d8c5463713',// 上线的数据库的密码，自己的APPID
+        pass: '123',// 本地的MySQL的数据库的密码
         char: 'utf8mb4'
     },
 

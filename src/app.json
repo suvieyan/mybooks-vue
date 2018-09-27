@@ -1,9 +1,10 @@
 {
     "pages": [
-        "pages/me/main",
-        "pages/book/main",
-        "pages/comments/main",
-        "pages/detail/main"
+      "pages/book/main",
+      "pages/comments/main",
+      "pages/me/main",
+      "pages/test/main",
+      "pages/detail/main"
     ],
     "window": {
       "backgroundTextStyle": "light",
@@ -30,6 +31,12 @@
           "text": "个人中心",
           "iconPath": "static/img/me.png",
           "selectedIconPath": "static/img/me-active.png"
+        },
+        {
+          "pagePath": "pages/test/main",
+          "text": "测试页面",
+          "iconPath": "static/img/todo.png",
+          "selectedIconPath": "static/img/todo-active.png"
         }
 
       ]
